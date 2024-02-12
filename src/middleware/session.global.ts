@@ -11,10 +11,13 @@ export default defineNuxtRouteMiddleware(async () => {
             }
         });
     } else {
-        $fetch('/api/session', {
-            headers: {
-                'cr-session': '1'
-            }
-        })
+        const session = useCookie('session');
+        if (!session.value) {
+            $fetch('/api/session', {
+                headers: {
+                    'cr-session': '1'
+                }
+            });
+        }
     }
 })
